@@ -1,0 +1,101 @@
+AddEventHandler("HeliSpawn", function()
+
+	local heliSnipers =  GetHashKey("s_m_m_chemsec_01")
+	local gun = GetHashKey('WEAPON_HEAVYSNIPER_MK2')
+	local theHeli = GetHashKey('valkyrie2')
+	
+
+	RequestModel(heliSnipers)
+	while not HasModelLoaded(heliSnipers) do
+		Citizen.Wait(0)
+		end
+
+	RequestModel(theHeli)
+	while not HasModelLoaded(theHeli) do
+		Citizen.Wait(0)
+		end
+
+	for i=1, 2 do 
+
+		local rnum = GetEntityCoords(GetPlayerPed(-1), true)
+		local rando = math.random(250,350)
+
+		Citizen.Wait(5000)
+
+		theHeliasEnemy = CreateVehicle(theHeli, rnum.x+rando, rnum.y+rando, rnum.z+500, 0.0, true, true)
+		Citizen.InvokeNative( 0xB893215D8D4C015B, theHeliasEnemy, 150)
+		SetVehicleEngineOn(theHeliasEnemy, true, true, true)
+		SetVehicleLandingGear(theHeliasEnemy, 3)
+		enemy = CreatePedInsideVehicle(theHeliasEnemy, 1, heliSnipers, -1, true, true )
+		enemy2 = CreatePedInsideVehicle(theHeliasEnemy, 1, heliSnipers, 0, true, true )
+		enemy3 = CreatePedInsideVehicle(theHeliasEnemy, 1, heliSnipers, 1, true, true )
+		enemy4 = CreatePedInsideVehicle(theHeliasEnemy, 1, heliSnipers, 2, true, true )
+
+
+		SetPedFiringPattern(enemy, 0xC6EE6B4C)
+		SetPedArmour(enemy, 100)
+		SetPedAsEnemy(enemy, true)
+		AddBlipForEntity(enemy)
+		SetPedRelationshipGroupHash(enemy, 'Merryweather')
+		GiveWeaponToPed(enemy, gun, 250, false, true)
+		TaskCombatPed(enemy, GetPlayerPed(-1))
+		SetPedAccuracy(enemy, 20)
+		SetPedDropsWeaponsWhenDead(enemy, false)
+		theHeliasEnemy = enemy
+		table.insert(enemies, enemy)
+
+		
+		SetPedFiringPattern(enemy2, 0xC6EE6B4C)
+		SetPedArmour(enemy2, 100)
+		SetPedAsEnemy(enemy2, true)
+		AddBlipForEntity(enemy2)
+		SetPedRelationshipGroupHash(enemy2, 'Merryweather')
+		GiveWeaponToPed(enemy2, gun, 250, false, true)
+		TaskCombatPed(enemy2, GetPlayerPed(-1))
+		SetPedAccuracy(enemy2, 20)
+		SetPedDropsWeaponsWhenDead(enemy2, false)
+		table.insert(enemies, enemy2)
+
+		SetPedFiringPattern(enemy3, 0xC6EE6B4C)
+		SetPedArmour(enemy3, 100)
+		SetPedAsEnemy(enemy3, true)
+		AddBlipForEntity(enemy3)
+		SetPedRelationshipGroupHash(enemy3, 'Merryweather')
+		GiveWeaponToPed(enemy3, gun, 250, false, true)
+		TaskCombatPed(enemy3, GetPlayerPed(-1))
+		SetPedAccuracy(enemy3, 20)
+		SetPedDropsWeaponsWhenDead(enemy3, false)
+		table.insert(enemies, enemy3)
+
+		SetPedFiringPattern(enemy4, 0xC6EE6B4C)
+		SetPedArmour(enemy4, 100)
+		SetPedAsEnemy(enemy4, true)
+		AddBlipForEntity(enemy4)
+		SetPedRelationshipGroupHash(enemy4, 'Merryweather')
+		GiveWeaponToPed(enemy4, gun, 250, false, true)
+		TaskCombatPed(enemy4, GetPlayerPed(-1))
+		SetPedAccuracy(enemy4, 20)
+		SetPedDropsWeaponsWhenDead(enemy4, false)
+		table.insert(enemies, enemy4)
+
+		TriggerEvent("engineRoom")
+		AddRelationshipGroup('Merryweather')
+
+		SetRelationshipBetweenGroups(0, 'Merryweather', 'COP')
+		SetRelationshipBetweenGroups(0, 'Merryweather', 'SWAT')
+		SetRelationshipBetweenGroups(0, 'Merryweather', 'ARMY')
+		SetRelationshipBetweenGroups(0, 'Merryweather', 'Merryweather')
+
+		SetRelationshipBetweenGroups(0, 'Merryweather', 'Merryweather')
+		SetRelationshipBetweenGroups(0, 'Merryweather', 'Merryweather')
+
+		SetRelationshipBetweenGroups(0, 'COP', 'Merryweather')
+		SetRelationshipBetweenGroups(0, 'SWAT', 'Merryweather')
+		SetRelationshipBetweenGroups(0, 'ARMY', 'Merryweather')
+		SetRelationshipBetweenGroups(0, 'Merryweather', 'Merryweather')
+
+
+		
+	end
+
+end)
